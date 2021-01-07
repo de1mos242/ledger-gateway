@@ -1,0 +1,5 @@
+server:
+  port: 8081
+
+recorder:
+  url: http://localhost:8080
