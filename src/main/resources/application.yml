@@ -3,3 +3,26 @@ server:
 
 recorder:
   url: http://localhost:8080
+
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:9494/auth/realms/t1
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: c1
+            client-secret: 591fc107-2fa1-4b58-b1d4-293187c628f3
+            scope: offline_access,profile,email,address,phone,roles,web-origins,microprofile-jwt
+
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay=
+        - RemoveRequestHeader=Cookie
+
+login:
+  redirect: http://localhost:3000
