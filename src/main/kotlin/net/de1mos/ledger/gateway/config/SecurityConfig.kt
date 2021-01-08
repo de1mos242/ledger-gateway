@@ -40,6 +40,7 @@ class SecurityConfig(@Value("\${login.redirect}") private val loginRedirect: Str
                 OidcClientInitiatedServerLogoutSuccessHandler(registrationRepository)
             )
         }
+        http.authorizeExchange().pathMatchers("/actuator/**").permitAll()
         http.authorizeExchange().anyExchange().authenticated()
         http.headers().frameOptions().mode(XFrameOptionsServerHttpHeadersWriter.Mode.SAMEORIGIN)
         http.csrf().disable()
