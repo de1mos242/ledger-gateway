@@ -10,13 +10,16 @@ import org.springframework.security.config.web.server.ServerHttpSecurity.LogoutS
 import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.client.oidc.web.server.logout.OidcClientInitiatedServerLogoutSuccessHandler
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository
+import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository
+import org.springframework.security.oauth2.client.web.server.WebSessionServerOAuth2AuthorizedClientRepository
 import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.security.web.server.WebFilterExchange
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler
 import org.springframework.security.web.server.header.XFrameOptionsServerHttpHeadersWriter
 import reactor.core.publisher.Mono
 
-class SucHandler(private val redirect: String): ServerAuthenticationSuccessHandler {
+
+class SucHandler(private val redirect: String) : ServerAuthenticationSuccessHandler {
     override fun onAuthenticationSuccess(
         webFilterExchange: WebFilterExchange,
         authentication: Authentication
@@ -46,5 +49,10 @@ class SecurityConfig(@Value("\${login.redirect}") private val loginRedirect: Str
         http.csrf().disable()
 
         return http.build()
+    }
+
+    @Bean
+    fun authorizedClientRepository(): ServerOAuth2AuthorizedClientRepository? {
+        return WebSessionServerOAuth2AuthorizedClientRepository()
     }
 }
