@@ -33,4 +33,4 @@ spring:
     password:
 
 login:
-  redirect: http://localhost:3000
+  redirect: http://localhost:3000/success-login
