@@ -13,8 +13,11 @@ class AppRouteLocator(private val tokenRelayGatewayFilterFactory: TokenRelayGate
     @Value("\${recorder.url}")
     var recorderUrl: String? = null
 
+    @Value("\${accounting.url}")
+    var accountingUrl: String? = null
+
     @Bean
-    fun customRouteLocator2(builder: RouteLocatorBuilder): RouteLocator {
+    fun recorderRouteLocator(builder: RouteLocatorBuilder): RouteLocator {
         return builder.routes().route("recorder") {
             it.path("/api/recorder/**")
                 .filters { f ->
@@ -22,6 +25,18 @@ class AppRouteLocator(private val tokenRelayGatewayFilterFactory: TokenRelayGate
                         .removeRequestHeader("Cookie")
                 }
                 .uri("$recorderUrl/api/recorder/")
+        }.build()
+    }
+
+    @Bean
+    fun accountingRouteLocator(builder: RouteLocatorBuilder): RouteLocator {
+        return builder.routes().route("recorder") {
+            it.path("/api/accounting/**")
+                .filters { f ->
+                    f.filters(tokenRelayGatewayFilterFactory.apply())
+                        .removeRequestHeader("Cookie")
+                }
+                .uri("$accountingUrl/api/accounting/")
         }.build()
     }
 }

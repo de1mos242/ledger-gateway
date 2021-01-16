@@ -4,6 +4,9 @@ server:
 recorder:
   url: http://localhost:8080
 
+accounting:
+  url: http://localhost:8082
+
 spring:
   security:
     oauth2:
