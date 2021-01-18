@@ -37,8 +37,10 @@ class SecurityConfig(@Value("\${login.redirect}") private val loginRedirect: Str
         http: ServerHttpSecurity,
         registrationRepository: ReactiveClientRegistrationRepository?
     ): SecurityWebFilterChain? {
+
         http.oauth2Login().authenticationSuccessHandler(SucHandler(loginRedirect))
         http.logout { logout: LogoutSpec ->
+            logout.logoutUrl("/oauth2/logout")
             logout.logoutSuccessHandler(
                 OidcClientInitiatedServerLogoutSuccessHandler(registrationRepository)
             )

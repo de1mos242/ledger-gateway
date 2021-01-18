@@ -19,7 +19,7 @@ spring:
             provider: keycloak
             client-id: c1
             client-secret: 591fc107-2fa1-4b58-b1d4-293187c628f3
-            scope: offline_access,profile,email,address,phone,roles,web-origins,microprofile-jwt
+            scope: offline_access,profile,email,address,phone,roles,web-origins,microprofile-jwt,openid
 
   cloud:
     gateway:
